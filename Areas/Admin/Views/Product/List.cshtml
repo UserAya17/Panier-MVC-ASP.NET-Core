@@ -1,0 +1,68 @@
+﻿@model List<MyShop.Models.Product>
+
+@{
+    ViewBag.Title = "Admin Product List";
+}
+
+<h1>Admin Product List</h1>
+<div class="row">
+    <div class="col-md-2">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="trek" class="nav-link">Trek</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="specialized" class="nav-link">Specialized</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="cannondale" class="nav-link">Cannondale</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="Giant" class="nav-link">Giant</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <table class="table table-info table-striped">
+            <tr>
+                <th>
+                    Brand
+                </th>
+                <th>
+                    Model
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <a asp-controller="Product" asp-action="Add" asp-route-id="@item.Id" class="btn btn-warning">Edit Product</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete Product</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <a asp-controller="Product" asp-action="Add" class="btn btn-primary">Add New Product</a>
+    </div>
+</div>

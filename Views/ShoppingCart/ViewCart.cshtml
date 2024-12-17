@@ -1,0 +1,51 @@
+﻿@model ShoppingCartViewModel
+
+<h1 class="mb-4">Shopping Cart</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.CartMessage as string))
+{
+    <div class="alert alert-success text-center" role="alert">
+        @ViewBag.CartMessage
+    </div>
+}
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartItems)
+        {
+            <tr>
+                <td>@item.Product.Brand</td>
+                <td>@item.Product.Model</td>
+                <td>@item.Product.Price?.ToString("C")</td>
+                <td>
+                    <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="id" value="@item.Product.Id" />
+                        <button type="submit" name="operation" value="decrement" class="btn btn-sm btn-outline-secondary">-</button>
+                        <input type="number" name="quantity" value="@item.Quantity" min="1" max="@item.Product.Stock" class="form-control mx-2 text-center" style="width: 70px;" />
+                        <button type="submit" name="operation" value="increment" class="btn btn-sm btn-outline-secondary">+</button>
+                    </form>
+                </td>
+                <td>@((item.Product.Price * item.Quantity)?.ToString("C"))</td>
+                <td>
+                    <a asp-controller="ShoppingCart" asp-action="RemoveItem" asp-route-id="@item.Product.Id" class="btn btn-sm btn-outline-danger">Remove</a>
+                </td>
+            </tr>
+        }
+        <tr class="table-light">
+            <td colspan="3"></td>
+            <td><strong>Total:</strong></td>
+            <td><strong>@Model.TotalPrice?.ToString("C")</strong></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

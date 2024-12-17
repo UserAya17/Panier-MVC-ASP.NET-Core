@@ -1,0 +1,46 @@
+﻿@model List<MyShop.Models.Product>
+
+@{
+    ViewBag.Title = "Product List";
+}
+
+<h1 class="mb-4">Product List</h1>
+<div class="row">
+    <!-- Sidebar with brand links -->
+    <div class="col-md-2">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="trek" class="nav-link">Trek</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="specialized" class="nav-link">Specialized</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="cannondale" class="nav-link">Cannondale</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Product" asp-action="List" asp-route-brand="giant" class="nav-link">Giant</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Product Cards Display -->
+    <div class="col-md-10">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card shadow-sm">
+                        <!-- Adjust image size and responsiveness -->
+                        <img src="@item.ImageFileName" class="card-img-top" alt="@item.Brand @item.Model" style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@item.Brand @item.Model</h5>
+                            <p class="card-text text-muted">@item.Price?.ToString("C")</p>
+                            <a href="@Url.Action("Details", "Product", new { id = item.Id, slug = item.Slug })" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

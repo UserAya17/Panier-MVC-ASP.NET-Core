@@ -1,0 +1,35 @@
+﻿@model MyShop.Models.Product
+
+@{
+    ViewBag.Title = "Product Details";
+}
+
+<h1>Product Details</h1>
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img src="@Model.ImageFileName" class="card-img-top" alt="@Model.Model">
+
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@Model.Brand</li>
+                    <li class="list-group-item">@Model.Model</li>
+                    <li class="list-group-item">@Model.Type</li>
+                    <li class="list-group-item">@Model.Price?.ToString("C")</li>
+                    <li class="list-group-item">@Model.Color</li>
+
+                    <li class="list-group-item">
+                        <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <input type="number" name="quantity" class="form-control mb-2" value="1" min="1" max="@Model.Stock" />
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
